@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Strength</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Password" />
+        <button type="submit" onclick="validatePass()">
+          <img src="./arrow-right-circle-icon.png" draggable="false" />
+        </button>
+        <p id="message">Password is <span id="strength"></span></p>
+        <p id="address"></p>
+      </div>
+    </div>
+
+    <script>
+      var pass = document.getElementById("password");
+      var msg = document.getElementById("message");
+      var str = document.getElementById("strength");
+      var adr = document.getElementById("address");
+
+      pass.addEventListener("input", () => {
+        if (pass.value.length > 0) {
+          msg.style.display = "block";
+        } else {
+          msg.style.display = "none";
+        }
+        if (pass.value.length < 4) {
+          str.innerHTML = "weak";
+          pass.style.borderColor = "#ff5925";
+          msg.style.color = "#ff5925";
+        } else if (pass.value.length >= 4 && pass.value.length < 8) {
+          str.innerHTML = "medium";
+          pass.style.borderColor = "yellow";
+          msg.style.color = "yellow";
+        } else if (pass.value.length >= 8) {
+          str.innerHTML = "strong";
+          pass.style.borderColor = "#26d730";
+          msg.style.color = "#26d730";
+        }
+      });
+
+      function validatePass() {
+        if (pass.value.search(/[0-9]/) == -1) {
+          adr.innerHTML = "At least one numeric value must be enter";
+          adr.style.color = "red";
+          return "no_number";
+        }
+        if (pass.value.search(/[a-z]/) == -1) {
+          adr.innerHTML = "At least one small letter must be enter";
+          adr.style.color = "red";
+          return "no_letter";
+        }
+        if (pass.value.search(/[A-Z]/) == -1) {
+          adr.innerHTML = "At least one Capital letter must be enter";
+          adr.style.color = "red";
+          return "no_Cletter";
+        }
+        if (
+          pass.value.search(/[!\@\#\$\%\^\&\*\(\)\_\+\.\:\;\?\=\,\<\>]/) == -1
+        ) {
+          adr.innerHTML = "At least one special character must be enter";
+          adr.style.color = "red";
+          return "no_slecter";
+        }
+        adr.innerHTML = "Successful!";
+        adr.style.color = "green";
+        return "ok";
+      }
+    </script>
+  </body>
+</html>
